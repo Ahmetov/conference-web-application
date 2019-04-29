@@ -1,0 +1,11 @@
+.idea/
+.gradle/
+out/
+/build/
+*.iml
+.gradletasknamecache
+# Package Files #
+*.jar
+*.war
+*.ear
+

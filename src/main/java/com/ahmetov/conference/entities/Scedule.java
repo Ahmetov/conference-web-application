@@ -1,12 +1,22 @@
 package com.ahmetov.conference.entities;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Entity
+@Table(name = "SCEDULE")
 public class Scedule {
 
-    private LocalDateTime presentationTime;
-    private Room room;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "scedule_id", nullable = false)
+    private Long id;
 
-    private Set<Presentation> presentations;
+    @Column(name = "date_time")
+    private LocalDateTime presentationTime;
+//
+//    private Room room;
+//
+//    private Set<Presentation> presentations;
 }

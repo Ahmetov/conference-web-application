@@ -22,6 +22,10 @@ public class Presentation {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne(cascade = {CascadeType.MERGE}) //deleted CascadeType.PERSIST AND REMOVE теперь нет detached exception и не удаляется room при удалении презентации
+    @JoinColumn(name = "pres_room_id", referencedColumnName = "room_id")
+    private Room presentationRoom;
+
 //
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "PRESENTATION_LECTORS",
@@ -33,7 +37,11 @@ public class Presentation {
 
     @PrePersist
     public void addListenersToPresentation(){
-        System.out.println("pre persist listeners");
+        System.out.println("pre persist Presentation");
+
+        presentationRoom.getPresentations().add(this);
+
+
         for(User listener : listeners){
             System.out.println("pre persist listeners");
             listener.getPresentations().add(this);
@@ -42,11 +50,22 @@ public class Presentation {
 
     @PreRemove
     public void removeListenersFromPresentation(){
-        System.out.println("pre persist listeners");
+        System.out.println("pre remove Presentation");
+
+        presentationRoom.getPresentations().remove(this);
+
         for(User listener : listeners){
             System.out.println("pre remove listeners");
             listener.getPresentations().remove(this);
         }
+    }
+
+    public Room getPresentationRoom() {
+        return presentationRoom;
+    }
+
+    public void setPresentationRoom(Room presentationRoom) {
+        this.presentationRoom = presentationRoom;
     }
 
     public Long getId() {
@@ -80,4 +99,7 @@ public class Presentation {
     public void setListeners(Set<User> listeners) {
         this.listeners = listeners;
     }
+
+
+
 }

@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+
+//TODO ДОДЕЛАТЬ, А ТО ВЛОЖЕННЫЙ th:each НЕ РАБОТАЕТ
 @Entity
 @Table(name = "SCEDULE")
 public class Scedule {

@@ -1,6 +1,7 @@
 package com.ahmetov.conference.services.impl;
 
 import com.ahmetov.conference.entities.Presentation;
+import com.ahmetov.conference.entities.Room;
 import com.ahmetov.conference.repository.PresentationRepository;
 import com.ahmetov.conference.services.PresentationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,10 @@ public class PresentationServiceImpl implements PresentationService {
         System.out.println(presentation.getPresentationRoom().getId());
         presentationRepository.save(presentation);
         
+    }
+
+    @Override
+    public Collection<Presentation> findByPresentationRoom(Room room) {
+        return presentationRepository.findByPresentationRoom(room);
     }
 }

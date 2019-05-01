@@ -20,7 +20,7 @@ public class MainController {
     @Autowired
     RoomService roomService;
 
-    @GetMapping("/")
+    @GetMapping("/admin")
     public String mainPage(Model model){
         List<Presentation> presentations = (List<Presentation>) presentationService.findAll();
         List<Room> rooms = (List<Room>) roomService.findAllRooms();

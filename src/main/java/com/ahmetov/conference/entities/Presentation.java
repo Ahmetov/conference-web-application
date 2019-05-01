@@ -1,6 +1,8 @@
 package com.ahmetov.conference.entities;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +12,8 @@ public class Presentation {
 
     //TODO не работает каскадное удаление через sql запрос(т.к. аннотации работают ток при вызове hibernate.delete.
     //НАДО добавить constraint или чет  еще)
+
+
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -21,6 +25,9 @@ public class Presentation {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "pres_time")
+    private LocalDateTime presentationTime;
 
     @ManyToOne(cascade = {CascadeType.MERGE}) //deleted CascadeType.PERSIST AND REMOVE теперь нет detached exception и не удаляется room при удалении презентации
     @JoinColumn(name = "pres_room_id", referencedColumnName = "room_id")
@@ -58,6 +65,18 @@ public class Presentation {
             System.out.println("pre remove listeners");
             listener.getPresentations().remove(this);
         }
+    }
+
+    public String getFormatedPresentationDateTime(){
+        return presentationTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public LocalDateTime getPresentationTime() {
+        return presentationTime;
+    }
+
+    public void setPresentationTime(LocalDateTime presentationTime) {
+        this.presentationTime = presentationTime;
     }
 
     public Room getPresentationRoom() {

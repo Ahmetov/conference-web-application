@@ -10,11 +10,6 @@ import java.util.Set;
 @Table(name = "PRESENTATIONS")
 public class Presentation {
 
-    //TODO не работает каскадное удаление через sql запрос(т.к. аннотации работают ток при вызове hibernate.delete.
-    //НАДО добавить constraint или чет  еще)
-
-
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "presentation_id", nullable = false)

@@ -4,6 +4,7 @@ import com.ahmetov.conference.entities.Room;
 import com.ahmetov.conference.repository.RoomRepository;
 import com.ahmetov.conference.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,10 +14,17 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomRepository roomRepository;
 
+
+
     @Override
     public Room findRoomById(String id) {
-        Long parsedId = Long.parseLong(id);
-        return roomRepository.findRoomById(parsedId);
+        try {
+            Long parsedId = Long.parseLong(id);
+            return roomRepository.findRoomById(parsedId);
+        } catch (NumberFormatException ex){
+            return null;
+        }
+
     }
 
     @Override

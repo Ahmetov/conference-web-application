@@ -1,12 +1,4 @@
-CREATE TABLE IF NOT EXISTS T_TEST (
-  ID INTEGER,
-  VALUE VARCHAR
-);
 
-
-INSERT INTO USERS(login, password) VALUES ('aaa','123');
-INSERT INTO USERS(login, password) VALUES ('aaa','123');
-INSERT INTO USERS(login, password) VALUES ('aaa','123');
 
 INSERT INTO ROOM(location) VALUES ('большой зал');
 INSERT INTO ROOM(location) VALUES ('малый зал');

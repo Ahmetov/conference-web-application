@@ -1,25 +1,86 @@
 package com.ahmetov.conference.services.impl;
 
+import com.ahmetov.conference.domain.Role;
 import com.ahmetov.conference.entities.User;
 import com.ahmetov.conference.repository.UserRepository;
 import com.ahmetov.conference.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findUserById(Long id){
-        return userRepository.findUserById(id);
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
+//
+
+
+    @Override
+    public User findUserById(String id) {
+        return null;
     }
 
-    public void deleteUserById(Long id){
-        userRepository.deleteUserById(id);
+    @Override
+    public void deleteUserById(String id) {
+        try {
+            Long parsedId = Long.parseLong(id);
+            userRepository.deleteUserById(parsedId);
+        } catch (NumberFormatException ex){
+
+        }
     }
 
-    public Collection<User> findAll(){
-        return userRepository.findAll();
+    @Override
+    public boolean save(User user) {
+
+        userRepository.save(user);
+        return true;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        BCryptPasswordEncoder encoder = passwordEncoder();
+
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), encoder.encode(user.getPassword()), getGrantedAuthorities(user));
+    }
+
+
+    private Collection<GrantedAuthority> getGrantedAuthorities(User user){
+
+        Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
+        grantedAuthority.add(new SimpleGrantedAuthority("USER"));
+        return grantedAuthority;
+    }
+
+
+    @Override
+    public User findByLogin(String login) {
+        return userRepository.findByUsername(login);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
 }

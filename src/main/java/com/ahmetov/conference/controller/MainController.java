@@ -20,7 +20,7 @@ public class MainController {
     @Autowired
     RoomService roomService;
 
-    @GetMapping("/admin")
+    @GetMapping("/")
     public String mainPage(Model model){
         List<Presentation> presentations = (List<Presentation>) presentationService.findAll();
         List<Room> rooms = (List<Room>) roomService.findAllRooms();
@@ -35,13 +35,13 @@ public class MainController {
     }
 
     @RequestMapping(value = "/deletePresentation", method = RequestMethod.POST)
-    private String deletePresentation(@RequestParam String id){
+    public String deletePresentation(@RequestParam String id){
         presentationService.deletePresentationById(id);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/addPresentation", method = RequestMethod.POST)
-    private String addPresentation(@ModelAttribute Presentation presentation){
+    public String addPresentation(@ModelAttribute Presentation presentation){
         presentationService.save(presentation);
         return "redirect:/";
     }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 </head>
 <body>
@@ -23,9 +23,19 @@
             <li class="nav-item">
                 <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/admin/users">Пользователи</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/logout">Выйти</a>
+            </li>
         </ul>
     </div>
 </nav>
+
+<br/>
+
+<h1 class="text-center">Админка</h1>
+
+<br/>
+<br/>
 
 <table class="table">
     <thead>
@@ -49,7 +59,7 @@
                 <!--<a th:href="@{'/planes?id=' + ${airport.id}}">Самолёты</a>-->
             </td>
             <td>
-                <form th:action="@{admin/deletePresentation}"  method="post">
+                <form th:action="@{admin/deleteUser}"  method="post">
                     <input type="hidden" name="id" th:value="${presentation.id}"/>
                     <input type="submit" value="Delete" class="btn btn-danger" />
 

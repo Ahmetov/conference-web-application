@@ -28,7 +28,7 @@ public class UserController {
         return "users";
     }
 
-    @PostMapping(value = "deletePresentation")
+    @PostMapping(value = "deleteUser")
     public String deletePresentation(@RequestParam String id){
         userService.deleteUserById(id);
         return "redirect:/admin/users";

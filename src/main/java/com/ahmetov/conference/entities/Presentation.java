@@ -63,7 +63,9 @@ public class Presentation {
     }
 
     public String getFormatedPresentationDateTime(){
-        return presentationTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        if (presentationTime != null)
+            return presentationTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        return null;
     }
 
     public LocalDateTime getPresentationTime() {

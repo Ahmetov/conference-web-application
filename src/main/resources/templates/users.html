@@ -17,6 +17,12 @@
             <li class="nav-item">
                 <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/room">Презентации</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/admin">Редактор презентаций</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/admin/users">Пользователи</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -25,23 +31,36 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Название</th>
-        <th scope="col">Описание</th>
-        <th scope="col">Время</th>
-        <th scope="col">Место проведения</th>
-        <th scope="col">Слушатели</th>
+        <th scope="col">Username</th>
+        <th scope="col">Роли</th>
     </tr>
     </thead>
     <tbody>
-    <th:block th:each="presentation : ${presentations}">
+    <th:block th:each="user : ${users}">
         <tr>
-            <th scope="row" th:text="${presentation.id}"></th>
-            <td th:text="${presentation.title}"></td>
-            <td th:text="${presentation.description}"></td>
-            <td th:text="${presentation.getFormatedPresentationDateTime()}"></td>
-            <td th:text="${presentation.presentationRoom.location}"></td>
+            <th scope="row" th:text="${user.id}"></th>
+            <td th:text="${user.username}"></td>
             <td>
-                <!--<a th:href="@{'/planes?id=' + ${airport.id}}">Самолёты</a>-->
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Роли
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <th:block th:each="role : ${user.roles}">
+                            <a class="dropdown-item" th:text="${role.name()}" href="#"></a>
+                        </th:block>
+                    </div>
+                </div>
+
+            </td>
+
+            <td>
+                <form th:action="@{admin/users/deleteUser}"  method="post">
+                    <input type="hidden" name="id" th:value="${user.id}"/>
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+
+                </form>
             </td>
 
         </tr>

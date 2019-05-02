@@ -13,8 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 
 @Service
@@ -26,6 +25,11 @@ public class UserServiceImpl implements UserService {
 //    private BCryptPasswordEncoder passwordEncoder;
 //
 
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
     @Override
     public User findUserById(String id) {
@@ -44,20 +48,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(User user) {
-
+        user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
         return true;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         BCryptPasswordEncoder encoder = passwordEncoder();
 
-        User user = userRepository.findByUsername(username);
 
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
+        }
+
+        if(user.getUsername().equals("admin") && user.getPassword().equals("admin")){
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), encoder.encode(user.getPassword()), getGrantedAdminAuthorities(user));
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), encoder.encode(user.getPassword()), getGrantedAuthorities(user));
@@ -65,9 +72,14 @@ public class UserServiceImpl implements UserService {
 
 
     private Collection<GrantedAuthority> getGrantedAuthorities(User user){
-
         Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
         grantedAuthority.add(new SimpleGrantedAuthority("USER"));
+        return grantedAuthority;
+    }
+
+    private Collection<GrantedAuthority> getGrantedAdminAuthorities(User user){
+        Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
+        grantedAuthority.add(new SimpleGrantedAuthority("ADMIN"));
         return grantedAuthority;
     }
 

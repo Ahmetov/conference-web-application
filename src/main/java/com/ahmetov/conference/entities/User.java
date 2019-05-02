@@ -37,6 +37,7 @@ public class User implements UserDetails {
 
     @Column(name = "active")
     private boolean active;
+
 //
 //    @ManyToMany
 //    @JoinTable(name = "user_roles",
@@ -84,6 +85,16 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String showRoles(){
+        StringBuilder str = new StringBuilder();
+        for (Role role : roles){
+            str.append(role.toString());
+            str.append(" ");
+        }
+
+        return str.toString();
     }
 
     //

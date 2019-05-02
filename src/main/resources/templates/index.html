@@ -7,101 +7,27 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #63B174">
-        <div class="collapse navbar-collapse" id="navbar1">
-            <ul class="nav nav-pills flex-column flex-sm-row sticky-top justify-content-around" >
-                <li class="nav-item">
-                    <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/">Презентации</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="#" role="button" aria-haspopup="true" aria-expanded="false">Пользователи</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="#">-</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #485e52">
+    <div class="collapse navbar-collapse" id="navbar1">
+        <ul class="nav nav-pills flex-column flex-sm-row sticky-top justify-content-around" >
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Название</th>
-            <th scope="col">Описание</th>
-            <th scope="col">Место проведения</th>
-            <th scope="col">Слушатели</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="presentation : ${presentations}">
-            <tr>
-                <th scope="row" th:text="${presentation.id}"></th>
-                <td th:text="${presentation.title}"></td>
-                <td th:text="${presentation.description}"></td>
-                <td th:text="${presentation.presentationRoom.location}"></td>
-                <td>
-
-                    <!--<a th:href="@{'/planes?id=' + ${airport.id}}">Самолёты</a>-->
-                </td>
-                <td>
-                    <form th:action="@{deletePresentation}"  method="post">
-                        <input type="hidden" name="id" th:value="${presentation.id}"/>
-                        <input type="submit" value="Delete" class="btn btn-danger" />
-
-                    </form>
-                </td>
-            </tr>
-        </th:block>
-
-        </tbody>
-    </table>
-    <br/>
-
-    <br/>
-
-    <br/><br/>
-
-    <div class="accordion" id="accordionExample">
-
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <b style="font-size: 20px; color: black;" >Добавить презентацию</b>
-                    </button>
-                </h5>
-            </div>
-
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-
-                <div class="card mb-3" >
-                    <br/>
-                    <form class="col-4" action="#" th:action="@{addPresentation}" th:object="${presentation}" method="post">
-                        <div class="form-group">
-                            <label for="inputName">Тема доклада</label>
-                            <input type="text" class="form-control" id="inputName" placeholder="Name" th:field="*{title}">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputCity">Описание</label>
-                            <input type="text" class="form-control" id="inputCity" placeholder="Location" th:field="*{description}">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputStartPoint">Комната</label>
-                            <select class="form-control" id="inputStartPoint" th:field="*{presentationRoom.id}">
-                                <th:block th:each="room : ${rooms}">
-                                    <option th:text="${room.location}" th:value="${room.id}"></option>
-                                </th:block>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Добавить</button>
-                    </form>
-                    <br/>
-                </div>
-
-            </div>
-        </div>
+            <li class="nav-item">
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/room">Презентации</a>
+            </li>
+        </ul>
     </div>
+</nav>
+
+    <h1 class="text-center">Конференция</h1>
+
+    <br/>
+    <br/>
+
+    <p>Посмотреть аудитории с презентациями</p><br/>
+    <a class="btn btn-info" href="/room">Аудитории с презентациями</a>
 
     <br/>
     <br/>

@@ -1,5 +1,7 @@
 package com.ahmetov.conference.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,18 +23,13 @@ public class Presentation {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "pres_time")
+    @Column(name = "pres_time", unique = true)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime presentationTime;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}) //deleted CascadeType.PERSIST AND REMOVE теперь нет detached exception и не удаляется room при удалении презентации
+    @ManyToOne() //было только merge
     @JoinColumn(name = "pres_room_id", referencedColumnName = "room_id")
     private Room presentationRoom;
-
-//
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "PRESENTATION_LECTORS",
-//                joinColumns = @JoinColumn(name = "presentation_id"))
-//    private Set<User> lectors;
 
     @ManyToMany(mappedBy = "presentations", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<User> listeners = new HashSet<>();

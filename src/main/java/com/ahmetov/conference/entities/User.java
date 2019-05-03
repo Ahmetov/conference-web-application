@@ -1,6 +1,6 @@
 package com.ahmetov.conference.entities;
 
-import com.ahmetov.conference.domain.Role;
+import com.ahmetov.conference.constant.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

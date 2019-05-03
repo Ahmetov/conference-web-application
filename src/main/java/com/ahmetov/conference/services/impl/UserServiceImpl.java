@@ -1,6 +1,6 @@
 package com.ahmetov.conference.services.impl;
 
-import com.ahmetov.conference.domain.Role;
+import com.ahmetov.conference.constant.Role;
 import com.ahmetov.conference.entities.User;
 import com.ahmetov.conference.repository.UserRepository;
 import com.ahmetov.conference.services.UserService;

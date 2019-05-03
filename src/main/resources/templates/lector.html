@@ -18,10 +18,10 @@
                 <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/room">Презентации</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/admin">Редактор презентаций</a>
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/lector">Редактор презентаций</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/admin/users">Пользователи</a>
+                <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/admin">Пользователи</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-sm-center flex-sm p-3 mb-2 text-white nav-bar-text-user" href="/logout">Выйти</a>
@@ -32,7 +32,7 @@
 
 <br/>
 
-<h1 class="text-center">Админка</h1>
+<h1 class="text-center">Редактор презентаций (лектор)</h1>
 
 <br/>
 <br/>
@@ -44,7 +44,7 @@
         <th scope="col">Название</th>
         <th scope="col">Описание</th>
         <th scope="col">Место проведения</th>
-        <th scope="col">Слушатели</th>
+        <th scope="col">Время</th>
     </tr>
     </thead>
     <tbody>
@@ -54,16 +54,21 @@
             <td th:text="${presentation.title}"></td>
             <td th:text="${presentation.description}"></td>
             <td th:text="${presentation.presentationRoom.location}"></td>
+            <td th:text="${presentation.getFormatedPresentationDateTime()}"></td>
             <td>
 
-                <!--<a th:href="@{'/planes?id=' + ${airport.id}}">Самолёты</a>-->
             </td>
             <td>
-                <form th:action="@{admin/deleteUser}"  method="post">
+                <form th:action="@{lector/deletePresentation}"  method="post">
                     <input type="hidden" name="id" th:value="${presentation.id}"/>
                     <input type="submit" value="Delete" class="btn btn-danger" />
 
                 </form>
+            </td>
+            <td>
+                <a class="btn btn-info" th:href="@{'lector/' + ${presentation.id}}">
+                    Update
+                </a>
             </td>
         </tr>
     </th:block>
@@ -91,18 +96,23 @@
 
             <div class="card mb-3" >
                 <br/>
-                <form class="col-4" action="#" th:action="@{admin/addPresentation}" th:object="${presentation}" method="post">
+                <form class="col-4" action="#" th:action="@{/lector/addPresentation}" th:object="${presentation}" method="post">
+                    <input type="hidden" th:value="${presentation.id}" name="Id" />
                     <div class="form-group">
                         <label for="inputName">Тема доклада</label>
-                        <input type="text" class="form-control" id="inputName" placeholder="Name" th:field="*{title}">
+                        <input type="text" class="form-control" id="inputName" placeholder="Title" th:field="*{title}">
                     </div>
                     <div class="form-group">
-                        <label for="inputCity">Описание</label>
-                        <input type="text" class="form-control" id="inputCity" placeholder="Location" th:field="*{description}">
+                        <label for="inputDescr">Описание</label>
+                        <input type="text" class="form-control" id="inputDescr" placeholder="Description" th:field="*{description}">
                     </div>
                     <div class="form-group">
-                        <label for="inputStartPoint">Комната</label>
-                        <select class="form-control" id="inputStartPoint" th:field="*{presentationRoom.id}">
+                        <label for="inputPresTime">Время проведения</label>
+                        <input type="datetime-local" class="form-control" id="inputPresTime" placeholder="Time" th:field="*{presentationTime}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRoom">Комната</label>
+                        <select class="form-control" id="inputRoom" th:field="*{presentationRoom.id}">
                             <th:block th:each="room : ${rooms}">
                                 <option th:text="${room.location}" th:value="${room.id}"></option>
                             </th:block>

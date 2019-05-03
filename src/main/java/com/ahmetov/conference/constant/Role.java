@@ -1,4 +1,4 @@
-package com.ahmetov.conference.domain;
+package com.ahmetov.conference.constant;
 
 import org.springframework.security.core.GrantedAuthority;
 

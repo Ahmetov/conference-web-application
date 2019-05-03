@@ -40,6 +40,11 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
+    public void update(Presentation presentation) {
+
+    }
+
+    @Override
     public Collection<Presentation> findByPresentationRoom(Room room) {
         return presentationRepository.findByPresentationRoom(room);
     }

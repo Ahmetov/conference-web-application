@@ -1,6 +1,6 @@
 package com.ahmetov.conference.controller;
 
-import com.ahmetov.conference.domain.Role;
+import com.ahmetov.conference.constant.Role;
 import com.ahmetov.conference.entities.User;
 import com.ahmetov.conference.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collections;
-import java.util.Map;
 
 @Controller
 public class RegistrationController {

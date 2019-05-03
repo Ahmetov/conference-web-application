@@ -19,16 +19,8 @@ public class Room {
     private Set<Presentation> presentations = new HashSet<>();
 
     @PreRemove
-    public void removePresentationsFromRooms(){
-        System.out.println("............... pre remove Room ...................");
-        for(Presentation p : presentations){
-            System.out.println("presentation id = " + p.getId());
-        }
+    public void removePresentationsFromRooms() {
         presentations.clear();
-
-        for(Presentation p : presentations){
-            System.out.println(p.getId());
-        }
     }
 
     public Long getId() {
@@ -55,10 +47,8 @@ public class Room {
         this.presentations = presentations;
     }
 
-
-
     @Override
-    public String toString(){
+    public String toString() {
         return this.location;
     }
 }

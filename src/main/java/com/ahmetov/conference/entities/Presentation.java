@@ -13,7 +13,7 @@ import java.util.Set;
 public class Presentation {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "presentation_id", nullable = false)
     private Long id;
 
@@ -27,7 +27,7 @@ public class Presentation {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime presentationTime;
 
-    @ManyToOne() //было только merge
+    @ManyToOne()
     @JoinColumn(name = "pres_room_id", referencedColumnName = "room_id")
     private Room presentationRoom;
 
@@ -35,31 +35,22 @@ public class Presentation {
     private Set<User> listeners = new HashSet<>();
 
     @PrePersist
-    public void addListenersToPresentation(){
-        System.out.println("pre persist Presentation");
-
+    public void addListenersToPresentation() {
         presentationRoom.getPresentations().add(this);
-
-
-        for(User listener : listeners){
-            System.out.println("pre persist listeners");
+        for (User listener : listeners) {
             listener.getPresentations().add(this);
         }
     }
 
     @PreRemove
-    public void removeListenersFromPresentation(){
-        System.out.println("pre remove Presentation");
-
+    public void removeListenersFromPresentation() {
         presentationRoom.getPresentations().remove(this);
-
-        for(User listener : listeners){
-            System.out.println("pre remove listeners");
+        for (User listener : listeners) {
             listener.getPresentations().remove(this);
         }
     }
 
-    public String getFormatedPresentationDateTime(){
+    public String getFormatedPresentationDateTime() {
         if (presentationTime != null)
             return presentationTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         return null;
@@ -112,7 +103,6 @@ public class Presentation {
     public void setListeners(Set<User> listeners) {
         this.listeners = listeners;
     }
-
 
 
 }

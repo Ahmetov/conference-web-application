@@ -10,11 +10,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="USR")
+@Table(name = "USR")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Long id;
 
@@ -33,18 +33,10 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @Column(name = "active")
     private boolean active;
-
-//
-//    @ManyToMany
-//    @JoinTable(name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id") )
-//    private Set<UserRole> userRoles;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,9 +79,9 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String showRoles(){
+    public String showRoles() {
         StringBuilder str = new StringBuilder();
-        for (Role role : roles){
+        for (Role role : roles) {
             str.append(role.toString());
             str.append(" ");
         }
@@ -97,21 +89,6 @@ public class User implements UserDetails {
         return str.toString();
     }
 
-    //
-//    @ManyToMany(mappedBy = "lectors", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-//    private Presentation presentationForLector;
-//
-//    @ManyToMany(mappedBy = "listeners", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-//    private Presentation presentationForListeners;
-
-//
-//    public Set<UserRole> getUserRoles() {
-//        return userRoles;
-//    }
-//
-//    public void setUserRoles(Set<UserRole> userRoles) {
-//        this.userRoles = userRoles;
-//    }
 
     public Set<Presentation> getPresentations() {
         return presentations;
@@ -144,8 +121,6 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 
 
 }

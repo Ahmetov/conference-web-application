@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collections;
 
+/**
+ * controller for registration page
+ */
 @Controller
 public class RegistrationController {
 
@@ -19,7 +22,7 @@ public class RegistrationController {
     UserService userService;
 
     @GetMapping("/registration")
-    public String registration(Model model){
+    public String registration(Model model) {
         User user = new User();
         model.addAttribute("user", user);
 
@@ -27,14 +30,12 @@ public class RegistrationController {
         return "registration";
     }
 
-    //TODO что-то тут не так
-
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute User user, Model model){
+    public String addUser(@ModelAttribute User user, Model model) {
 
         User userFromDb = userService.findByLogin(user.getUsername());
 
-        if (userFromDb != null){
+        if (userFromDb != null) {
             return "registration";
         }
 

@@ -15,19 +15,19 @@ public class PresentationServiceImpl implements PresentationService {
     private PresentationRepository presentationRepository;
 
     @Override
-    public Presentation findPresentationById(String id){
+    public Presentation findPresentationById(String id) {
         Long parsedId = Long.parseLong(id);
         return presentationRepository.findPresentationById(parsedId);
     }
 
     @Override
-    public void deletePresentationById(String id){
+    public void deletePresentationById(String id) {
         Long parsedId = Long.parseLong(id);
         presentationRepository.deletePresentationById(parsedId);
     }
 
     @Override
-    public Collection<Presentation> findAll(){
+    public Collection<Presentation> findAll() {
         return presentationRepository.findAll();
     }
 
@@ -36,11 +36,6 @@ public class PresentationServiceImpl implements PresentationService {
         System.out.println(presentation.getId());
         System.out.println(presentation.getPresentationRoom().getId());
         presentationRepository.save(presentation);
-        
-    }
-
-    @Override
-    public void update(Presentation presentation) {
 
     }
 

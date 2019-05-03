@@ -8,6 +8,8 @@ import java.util.Collection;
 @Service
 public interface RoomService {
     Room findRoomById(String id);
+
     void deleteRoomById(String id);
+
     Collection<Room> findAllRooms();
 }

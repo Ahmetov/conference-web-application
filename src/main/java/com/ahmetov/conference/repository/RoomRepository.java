@@ -10,5 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Room findRoomById(Long id);
+
     void deleteRoomById(Long id);
 }

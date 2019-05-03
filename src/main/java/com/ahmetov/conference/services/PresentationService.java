@@ -9,9 +9,12 @@ import java.util.Collection;
 @Service
 public interface PresentationService {
     Collection<Presentation> findAll();
+
     Presentation findPresentationById(String id);
+
     void deletePresentationById(String id);
+
     void save(Presentation presentation);
-    void update(Presentation presentation);
+
     Collection<Presentation> findByPresentationRoom(Room room);
 }

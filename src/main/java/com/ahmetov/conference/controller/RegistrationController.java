@@ -25,25 +25,19 @@ public class RegistrationController {
     public String registration(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-
-
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute User user, Model model) {
-
         User userFromDb = userService.findByLogin(user.getUsername());
-
         if (userFromDb != null) {
             return "registration";
         }
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-
         userService.save(user);
-
         return "redirect:/login";
     }
 }

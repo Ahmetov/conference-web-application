@@ -33,10 +33,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public void save(Presentation presentation) {
-        System.out.println(presentation.getId());
-        System.out.println(presentation.getPresentationRoom().getId());
         presentationRepository.save(presentation);
-
     }
 
     @Override

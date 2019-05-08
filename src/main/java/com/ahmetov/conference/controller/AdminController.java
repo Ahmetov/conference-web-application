@@ -51,14 +51,10 @@ public class AdminController {
     public String setLector(@RequestParam String id) {
         User user = userService.findUserById(id);
         Set<Role> roleSet = user.getRoles();
-        for (Role role : roleSet) {
-            System.out.println(role.name());
-        }
         if (!roleSet.contains(Role.PRESENTER)) {
             roleSet = user.getRoles();
             roleSet.add(Role.PRESENTER);
             user.setRoles(roleSet);
-
             userService.save(user);
         }
 

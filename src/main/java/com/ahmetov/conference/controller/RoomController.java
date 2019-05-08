@@ -31,7 +31,6 @@ public class RoomController {
     public ModelAndView homePage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("scedule");
-
         List<Room> rooms = (List<Room>) roomService.findAllRooms();
         modelAndView.addObject("rooms", rooms);
         return modelAndView;
@@ -41,12 +40,9 @@ public class RoomController {
     public ModelAndView getPresentationsInRoom(@PathVariable String id) {
         Room room = roomService.findRoomById(id);
         List<Presentation> presentationList = (List<Presentation>) presentationService.findByPresentationRoom(room);
-
         ModelAndView modelAndView = new ModelAndView();
-
         modelAndView.setViewName("presentationsByRoom");
         modelAndView.addObject("presentations", presentationList);
-
         return modelAndView;
     }
 

@@ -52,13 +52,11 @@ public class LectorController {
 
     @RequestMapping("lector/{id}")
     public String updatePresentation(@PathVariable("id") String id, Model model) {
-
         model.addAttribute("presentation", presentationService.findPresentationById(id));
         List<Presentation> presentations = (List<Presentation>) presentationService.findAll();
         List<Room> rooms = (List<Room>) roomService.findAllRooms();
         model.addAttribute("rooms", rooms);
         model.addAttribute("presentations", presentations);
-
         return "lector";
     }
 

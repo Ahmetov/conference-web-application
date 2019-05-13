@@ -20,12 +20,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/room")
 public class RoomController {
+    private PresentationService presentationService;
+
+    private RoomService roomService;
 
     @Autowired
-    PresentationService presentationService;
-
-    @Autowired
-    RoomService roomService;
+    public RoomController(PresentationService presentationService, RoomService roomService) {
+        this.presentationService = presentationService;
+        this.roomService = roomService;
+    }
 
     @GetMapping
     public ModelAndView homePage() {

@@ -11,8 +11,12 @@ import java.util.Collection;
 
 @Service
 public class PresentationServiceImpl implements PresentationService {
-    @Autowired
     private PresentationRepository presentationRepository;
+
+    @Autowired
+    public PresentationServiceImpl(PresentationRepository presentationRepository) {
+        this.presentationRepository = presentationRepository;
+    }
 
     @Override
     public Presentation findPresentationById(String id) {

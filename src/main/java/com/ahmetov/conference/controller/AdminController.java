@@ -1,8 +1,10 @@
 package com.ahmetov.conference.controller;
 
 import com.ahmetov.conference.constant.Role;
+import com.ahmetov.conference.dto.UserDto;
 import com.ahmetov.conference.entities.User;
 import com.ahmetov.conference.services.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,18 +22,20 @@ import java.util.Set;
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public AdminController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping()
     public String usersPage(Model model) {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        User user = new User();
+        UserDto user = new UserDto();
         user.setRoles(Collections.singleton(Role.USER));
-
         model.addAttribute("user", user);
-
         return "users";
     }
 
@@ -42,7 +46,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "addUser")
-    public String addUser(@ModelAttribute User user) {
+    public String addUser(@ModelAttribute UserDto userDto) {
+        User user = new User();
+        BeanUtils.copyProperties(userDto,user);
         userService.save(user);
         return "redirect:/admin";
     }

@@ -4,6 +4,7 @@ import com.ahmetov.conference.constant.Role;
 import com.ahmetov.conference.entities.User;
 import com.ahmetov.conference.repository.UserRepository;
 import com.ahmetov.conference.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,8 +22,14 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+    private static final Logger logger = Logger.getLogger("loggs");
+
     private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<User> findAll() {
@@ -32,8 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(String id) {
         Long parsedId = Long.parseLong(id);
-        User user = userRepository.findById(parsedId).get();
-        return user;
+        return userRepository.findById(parsedId).orElse(null);
     }
 
     @Override
@@ -42,7 +48,7 @@ public class UserServiceImpl implements UserService {
             Long parsedId = Long.parseLong(id);
             userRepository.deleteUserById(parsedId);
         } catch (NumberFormatException ex) {
-
+            logger.error(ex);
         }
     }
 
@@ -58,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username){
         BCryptPasswordEncoder encoder = passwordEncoder();
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -66,7 +72,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user.getUsername().equals("admin") && user.getPassword().equals("admin")) {
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), encoder.encode(user.getPassword()), getGrantedAdminAuthorities(user));
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), encoder.encode(user.getPassword()), getGrantedAdminAuthorities());
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), encoder.encode(user.getPassword()), getGrantedAuthorities(user));
@@ -82,7 +88,7 @@ public class UserServiceImpl implements UserService {
         return grantedAuthority;
     }
 
-    private Collection<GrantedAuthority> getGrantedAdminAuthorities(User user) {
+    private Collection<GrantedAuthority> getGrantedAdminAuthorities() {
         Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
         grantedAuthority.add(new SimpleGrantedAuthority("ADMIN"));
         grantedAuthority.add(new SimpleGrantedAuthority("PRESENTER"));
